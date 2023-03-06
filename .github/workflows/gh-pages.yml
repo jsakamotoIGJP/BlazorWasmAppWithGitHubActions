@@ -21,6 +21,8 @@ jobs:
         run: dotnet workload install wasm-tools
 
       # Publish the site
+      - name: Configure NuGet Package Source
+        run: dotnet nuget add source --username api-key --password ${{ secrets.NUPKG_API_KEY }} --store-password-in-clear-text --name igjp-tc-private "https://nuget.pkg.github.com/igjp-tc-private/index.json"
       - name: Publish
         run: dotnet publish BlazorWasmApp/BlazorWasmApp.csproj -c Release -o public -p GHPages=true
 
